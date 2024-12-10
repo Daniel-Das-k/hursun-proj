@@ -1,4 +1,5 @@
 from driver_behavior import DriverBehavior
+import joblib  # Import joblib for saving the model
 
 def save_to_file(text='test'):
     with open('stats.txt','a') as f:
@@ -12,6 +13,8 @@ if __name__ == '__main__':
     
     indices_map = {k:v for v,k in enumerate(list(db.X))}
     results = {}
+    best_accuracy = 0  # Variable to track the best accuracy
+    best_model_name = ''  # Variable to track the best model name
     
     # the madness begins
     for n in range(2, 52):
@@ -28,3 +31,11 @@ if __name__ == '__main__':
         test_acc = db.test_accuracy(force_update=True, selected_features=selected_indices)
         results[n] = {'train':train_acc, 'test':test_acc}
         save_to_file('{}: {}'.format(n , results[n]))
+
+        # Check if current model is the best
+        if test_acc[name] > best_accuracy:
+            best_accuracy = test_acc[name]
+            best_model_name = name
+            joblib.dump(db.models[name], f'best_model_{name}.h5')  # Save the best model
+
+    print(f'Best Model: {best_model_name} with Test Accuracy: {best_accuracy}')

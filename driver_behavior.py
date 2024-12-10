@@ -27,10 +27,10 @@ class DriverBehavior:
             'decision_tree' : tree.DecisionTreeClassifier(),
             'random_forest' : RandomForestClassifier(),
             'knn'           : KNeighborsClassifier(),
-            'mlp'           : MLPClassifier(),
+            'mlp'           : MLPClassifier(max_iter=500),  
             'gradient_boosting' : GradientBoostingClassifier(),
-            'linear_svc'    : LinearSVC(),
-            'logistic'      : LogisticRegression(),
+            'linear_svc'    : LinearSVC(max_iter=500),  
+            'logistic'      : LogisticRegression(max_iter=500),  
             'adaboost'      : AdaBoostClassifier(),
             'naive_bayes'   : GaussianNB(),
                       }
